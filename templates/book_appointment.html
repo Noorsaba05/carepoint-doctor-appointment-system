@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | CarePoint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="patient-page">
+
+<div class="patient-layout">
+
+    <aside class="patient-sidebar">
+        <a href="/" class="logo"><span class="logo-icon">✚</span> CarePoint</a>
+        <p class="sidebar-label">MENU</p>
+        <a href="{{ url_for('dashboard') }}" class="side-link">▦ Dashboard</a>
+        <a href="{{ url_for('doctors') }}" class="side-link active">♙ Find Doctors</a>
+        <a href="{{ url_for('appointments') }}" class="side-link">▤ My Appointments</a>
+        <a href="{{ url_for('profile') }}" class="side-link">◎ My Profile</a>
+        <div class="sidebar-bottom">
+            <form method="POST" action="{{ url_for('logout') }}">
+                <button class="side-logout">↪ Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="patient-main">
+
+        <header class="patient-topbar">
+            <div>
+                <h2>Book Appointment</h2>
+                <p>Schedule your consultation.</p>
+            </div>
+            <a href="{{ url_for('doctors') }}" class="back-link">← Doctors</a>
+        </header>
+
+        <div class="booking-card">
+
+            <div class="booking-doctor">
+                <div class="doctor-avatar-large">🩺</div>
+                <span class="doctor-specialty">{{ doctor.specialization }}</span>
+                <h2>{{ doctor.name }}</h2>
+                <p>{{ doctor.qualification }}</p>
+                <p>{{ doctor.experience }} years experience</p>
+                <h3>Consultation Fee: ₹{{ "%.2f"|format(doctor.consultation_fee|float) }}</h3>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <div class="form-group">
+                    <label>Appointment Date</label>
+                    <input type="date" name="appointment_date"
+                           min="{{ today }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Available Time Slots</label>
+                    <select name="appointment_time" required>
+                        <option value="">Select a time</option>
+                        {% for slot in slots %}
+                            <option value="{{ slot }}">{{ slot }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Reason for Consultation</label>
+                    <textarea name="reason" rows="4" maxlength="500"
+                              placeholder="Briefly describe your reason for visiting..."></textarea>
+                </div>
+
+                <button type="submit" class="patient-primary full-button">
+                    Confirm Appointment →
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

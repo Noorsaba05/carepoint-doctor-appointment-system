@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments | CarePoint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="patient-page">
+
+<div class="patient-layout">
+
+    <aside class="patient-sidebar">
+        <a href="/" class="logo"><span class="logo-icon">✚</span> CarePoint</a>
+        <p class="sidebar-label">MENU</p>
+        <a href="{{ url_for('dashboard') }}" class="side-link">▦ Dashboard</a>
+        <a href="{{ url_for('doctors') }}" class="side-link">♙ Find Doctors</a>
+        <a href="{{ url_for('appointments') }}" class="side-link active">▤ My Appointments</a>
+        <a href="{{ url_for('profile') }}" class="side-link">◎ My Profile</a>
+        <div class="sidebar-bottom">
+            <form method="POST" action="{{ url_for('logout') }}">
+                <button class="side-logout">↪ Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="patient-main">
+
+        <header class="patient-topbar">
+            <div>
+                <h2>My Appointments</h2>
+                <p>View and manage your consultations.</p>
+            </div>
+            <a href="{{ url_for('doctors') }}" class="patient-primary">+ Book Appointment</a>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="appointment-table-wrap">
+            <table class="appointment-table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Speciality</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Fee</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in appointments %}
+                    <tr>
+                        <td>{{ item.doctor.name }}</td>
+                        <td>{{ item.doctor.specialization }}</td>
+                        <td>{{ item.appointment_date.strftime('%d %b %Y') }}</td>
+                        <td>{{ item.appointment_time.strftime('%I:%M %p') }}</td>
+                        <td>₹{{ "%.2f"|format(item.doctor.consultation_fee|float) }}</td>
+                        <td>
+                            <span class="status {{ item.status|lower }}">{{ item.status }}</span>
+                        </td>
+                        <td>
+{% if item.status in ['pending', 'confirmed'] and item.appointment_date >= today %}                            <form method="POST"
+                                  action="{{ url_for('cancel_appointment', appointment_id=item.appointment_id) }}"
+                                  onsubmit="return confirm('Cancel this appointment?');">
+                                <button class="cancel-button">Cancel</button>
+                            </form>
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty-table">
+                            No appointments found. Book your first consultation!
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

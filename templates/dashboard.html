@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | CarePoint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="patient-page">
+
+<div class="patient-layout">
+
+    <aside class="patient-sidebar">
+        <a href="/" class="logo"><span class="logo-icon">✚</span> CarePoint</a>
+
+        <p class="sidebar-label">MENU</p>
+
+        <a href="{{ url_for('dashboard') }}" class="side-link active">▦ Dashboard</a>
+        <a href="{{ url_for('doctors') }}" class="side-link">♙ Find Doctors</a>
+        <a href="{{ url_for('appointments') }}" class="side-link">▤ My Appointments</a>
+        <a href="{{ url_for('profile') }}" class="side-link">◎ My Profile</a>
+
+        <div class="sidebar-bottom">
+            <form method="POST" action="{{ url_for('logout') }}">
+                <button class="side-logout">↪ Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="patient-main">
+
+        <header class="patient-topbar">
+            <div>
+                <h2>Patient Dashboard</h2>
+                <p>Manage your healthcare in one place.</p>
+            </div>
+            <a href="{{ url_for('profile') }}" class="profile-chip">
+                {{ current_user.full_name }}
+            </a>
+        </header>
+
+        <section class="patient-welcome">
+            <div>
+                <span>YOUR HEALTH, OUR PRIORITY</span>
+                <h1>Hello, {{ current_user.full_name }}!</h1>
+                <p>Stay on top of your health. Book consultations and manage your appointments.</p>
+                <a href="{{ url_for('doctors') }}" class="patient-primary">Book an Appointment →</a>
+            </div>
+            <div class="welcome-symbol">✚</div>
+        </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <section class="patient-stats">
+            <div class="patient-stat">
+                <span>Total Appointments</span>
+                <h2>{{ total }}</h2>
+                <small>All bookings</small>
+            </div>
+            <div class="patient-stat">
+                <span>Upcoming Appointments</span>
+                <h2>{{ upcoming_count }}</h2>
+                <small>Pending and confirmed</small>
+            </div>
+            <div class="patient-stat">
+                <span>Account Type</span>
+                <h2>Patient</h2>
+                <small>CarePoint member</small>
+            </div>
+        </section>
+
+        <section class="dashboard-section">
+            <div class="section-title-row">
+                <div>
+                    <h2>Upcoming Appointments</h2>
+                    <p>Your scheduled consultations</p>
+                </div>
+                <a href="{{ url_for('appointments') }}">View All →</a>
+            </div>
+
+            {% if upcoming %}
+                <div class="appointment-cards">
+                    {% for appointment in upcoming[:3] %}
+                        <div class="patient-appointment-card">
+                            <div class="appointment-date-box">
+                                <strong>{{ appointment.appointment_date.strftime('%d') }}</strong>
+                                <span>{{ appointment.appointment_date.strftime('%b') }}</span>
+                            </div>
+                            <div class="appointment-details">
+                                <h3>{{ appointment.doctor.name }}</h3>
+                                <p>{{ appointment.doctor.specialization }}</p>
+                                <small>{{ appointment.appointment_time.strftime('%I:%M %p') }}</small>
+                            </div>
+                            <span class="status {{ appointment.status|lower }}">{{ appointment.status }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div>📅</div>
+                    <h3>No appointments yet</h3>
+                    <p>Your upcoming consultations will appear here.</p>
+                    <a href="{{ url_for('doctors') }}" class="patient-primary">Find a Doctor</a>
+                </div>
+            {% endif %}
+        </section>
+
+        <section class="dashboard-section">
+            <div class="section-title-row">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Access your healthcare services</p>
+                </div>
+            </div>
+
+            <div class="quick-action-grid">
+                <a href="{{ url_for('doctors') }}">🩺 <strong>Find a Doctor</strong><span>Explore specialists</span></a>
+                <a href="{{ url_for('appointments') }}">📅 <strong>My Appointments</strong><span>Manage bookings</span></a>
+                <a href="{{ url_for('profile') }}">👤 <strong>My Profile</strong><span>Update your details</span></a>
+            </div>
+        </section>
+
+        <footer class="patient-footer">© 2026 CarePoint. All rights reserved.</footer>
+
+    </main>
+</div>
+
+</body>
+</html>

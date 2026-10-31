@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Doctors | CarePoint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="patient-page">
+
+<div class="patient-layout">
+
+    <aside class="patient-sidebar">
+        <a href="/" class="logo"><span class="logo-icon">✚</span> CarePoint</a>
+        <p class="sidebar-label">MENU</p>
+        <a href="{{ url_for('dashboard') }}" class="side-link">▦ Dashboard</a>
+        <a href="{{ url_for('doctors') }}" class="side-link active">♙ Find Doctors</a>
+        <a href="{{ url_for('appointments') }}" class="side-link">▤ My Appointments</a>
+        <a href="{{ url_for('profile') }}" class="side-link">◎ My Profile</a>
+        <div class="sidebar-bottom">
+            <form method="POST" action="{{ url_for('logout') }}">
+                <button class="side-logout">↪ Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="patient-main">
+
+        <header class="patient-topbar">
+            <div>
+                <h2>Find a Doctor</h2>
+                <p>Choose a healthcare professional for your consultation.</p>
+            </div>
+            <a href="{{ url_for('dashboard') }}" class="back-link">← Dashboard</a>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="GET" class="doctor-search">
+            <input type="search" name="search" value="{{ search }}"
+                   placeholder="Search by doctor or speciality...">
+            <button class="patient-primary">Search</button>
+        </form>
+
+        <div class="doctor-list-grid">
+            {% for doctor in doctors %}
+                <div class="doctor-profile-card">
+                    <div class="doctor-avatar-large">🩺</div>
+                    <span class="doctor-specialty">{{ doctor.specialization }}</span>
+                    <h3>{{ doctor.name }}</h3>
+                    <p>{{ doctor.qualification }}</p>
+                    <div class="doctor-meta">
+                        <span>Experience: {{ doctor.experience }} years</span>
+                        <strong>₹{{ "%.2f"|format(doctor.consultation_fee|float) }}</strong>
+                    </div>
+                    <a href="{{ url_for('book_appointment', doctor_id=doctor.doctor_id) }}"
+                       class="patient-primary full-button">Book Appointment →</a>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>No doctors found</h3>
+                    <p>Try another name or speciality.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

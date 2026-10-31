@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CarePoint | Doctor Appointment System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container nav-content">
+
+            <a href="/" class="logo">
+                <span class="logo-icon">✚</span>
+                CarePoint
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#doctors">Doctors</a>
+            </nav>
+
+            <div class="nav-buttons">
+
+                <a href="{{ url_for('login') }}" class="login-btn">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}" class="primary-btn">
+                    Register
+                </a>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <div class="container hero-content">
+
+            <div class="hero-text">
+
+                <span class="eyebrow">
+                    YOUR HEALTH, OUR PRIORITY
+                </span>
+
+                <h1>
+                    Quality Healthcare,
+                    <span>Made Simple.</span>
+                </h1>
+
+                <p>
+                    Book appointments with qualified healthcare
+                    professionals. Experience convenient and
+                    reliable healthcare management in one place.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="{{ url_for('login') }}" class="primary-btn">
+                        Find a Doctor →
+                    </a>
+
+                    <a href="#services" class="secondary-btn">
+                        Explore Services
+                    </a>
+
+                </div>
+
+                <div class="hero-features">
+                    <span>✓ Easy Booking</span>
+                    <span>✓ Trusted Care</span>
+                    <span>✓ Patient Focused</span>
+                </div>
+
+            </div>
+
+            <div class="hero-image">
+
+                <div class="image-placeholder">
+
+                    <span class="medical-symbol">✚</span>
+
+                    <h2>Your Health Matters</h2>
+
+                    <p>Care you can count on.</p>
+
+                </div>
+
+                <div class="floating-card">
+
+                    <span class="floating-icon">♡</span>
+
+                    <div>
+                        <strong>Healthcare First</strong>
+                        <small>Your wellbeing matters</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="stats">
+
+        <div class="container stats-grid">
+
+            <div>
+                <h2>24/7</h2>
+                <p>Online Access</p>
+            </div>
+
+            <div>
+                <h2>Easy</h2>
+                <p>Appointment Booking</p>
+            </div>
+
+            <div>
+                <h2>Secure</h2>
+                <p>Patient Information</p>
+            </div>
+
+            <div>
+                <h2>Simple</h2>
+                <p>Healthcare Management</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Services -->
+    <section class="section" id="services">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">OUR SERVICES</span>
+
+                <h2>Healthcare Made Convenient</h2>
+
+                <p>
+                    Everything you need to manage your healthcare
+                    appointments in one place.
+                </p>
+
+            </div>
+
+            <div class="service-grid">
+
+                <div class="service-card">
+
+                    <div class="service-icon">🩺</div>
+
+                    <h3>Doctor Consultation</h3>
+
+                    <p>
+                        Find healthcare professionals and
+                        schedule consultations conveniently.
+                    </p>
+
+                </div>
+
+                <div class="service-card">
+
+                    <div class="service-icon">📅</div>
+
+                    <h3>Online Booking</h3>
+
+                    <p>
+                        Book appointments by selecting your
+                        preferred date and time.
+                    </p>
+
+                </div>
+
+                <div class="service-card">
+
+                    <div class="service-icon">📋</div>
+
+                    <h3>Appointment Tracking</h3>
+
+                    <p>
+                        View and manage your upcoming
+                        appointments easily.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- About -->
+    <section class="about-section" id="about">
+
+        <div class="container about-content">
+
+            <div class="about-visual">
+
+                <div class="about-symbol">✚</div>
+
+                <h2>Care That Comes First</h2>
+
+                <p>Simple. Accessible. Reliable.</p>
+
+            </div>
+
+            <div class="about-text">
+
+                <span class="eyebrow">ABOUT CAREPOINT</span>
+
+                <h2>Making Healthcare More Accessible</h2>
+
+                <p>
+                    CarePoint is a healthcare appointment management
+                    platform designed to simplify the process of
+                    connecting patients with doctors.
+                </p>
+
+                <p>
+                    Our system aims to make appointment scheduling,
+                    patient management and healthcare administration
+                    more organised and efficient.
+                </p>
+
+                <a href="{{ url_for('login') }}" class="primary-btn">
+                    Explore More →
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Doctors -->
+    <section class="section" id="doctors">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">OUR SPECIALTIES</span>
+
+                <h2>Find the Right Healthcare</h2>
+
+                <p>
+                    Explore different medical specialities
+                    available through our appointment platform.
+                </p>
+
+            </div>
+
+            <div class="doctor-grid">
+
+                <div class="doctor-card">
+                    <div class="doctor-avatar">🫀</div>
+                    <h3>Cardiology</h3>
+                    <p>Heart and cardiovascular care</p>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-avatar">🧠</div>
+                    <h3>Neurology</h3>
+                    <p>Brain and nervous system care</p>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-avatar">🦴</div>
+                    <h3>Orthopedics</h3>
+                    <p>Bone and joint care</p>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-avatar">🩺</div>
+                    <h3>General Medicine</h3>
+                    <p>General health consultations</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+
+        <div class="container cta-content">
+
+            <h2>Your Health Deserves Attention.</h2>
+
+            <p>
+                Take the first step towards convenient healthcare.
+            </p>
+
+            <a href="{{ url_for('login') }}" class="cta-btn">
+                Get Started →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <a href="/" class="logo footer-logo">
+                <span class="logo-icon">✚</span>
+                CarePoint
+            </a>
+
+            <p>
+                © 2026 CarePoint. Doctor Appointment System.
+                Academic project.
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
